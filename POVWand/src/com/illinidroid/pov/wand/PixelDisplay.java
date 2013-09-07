@@ -1,9 +1,14 @@
 package com.illinidroid.pov.wand;
 
+import java.util.Vector;
+
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Bitmap.Config;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -11,6 +16,7 @@ import android.view.SurfaceView;
 public class PixelDisplay extends SurfaceView {
 	
 	int pixels = 0;
+	int loc = 0;
 	
 	static final String TAG = "PixelDisplay";
 	SurfaceHolder holder;
@@ -24,6 +30,10 @@ public class PixelDisplay extends SurfaceView {
 	float radius;
 
     Paint p;
+    
+    static Bitmap circleBitmap;
+    
+    Vector<Drawable> dirtyTiles = new Vector<Drawable>();
 
 	public PixelDisplay(Context context) {
 		super(context);
@@ -44,9 +54,12 @@ public class PixelDisplay extends SurfaceView {
 		p.setColor(color);
 	}
 	
-	public void setDisplayData(boolean[][] data) {
-		this.data = data;
-		pixels = data[0].length;
+	public void setDisplayText(String text) {
+		data = TextConverter.convert(text);
+		if(data.length > 0)
+			pixels = data[0].length;
+		if(getHeight() > 0)
+			prepareForDrawing();
 	}
 	
 	public void init() {
@@ -77,11 +90,7 @@ public class PixelDisplay extends SurfaceView {
 
 			@Override
 			public void surfaceCreated(SurfaceHolder holder) {
-				diameter = getHeight() / pixels;
-				x = (getWidth() - diameter) / 2;
-				radius = diameter / 2;
-				_pixelThread.setRunning(true);
-				_pixelThread.start();
+				prepareForDrawing();
 			}
 
 			@Override
@@ -92,12 +101,33 @@ public class PixelDisplay extends SurfaceView {
 		});
 	}
 	
-	@Override
-    protected void onDraw(Canvas canvas) {
-          canvas.drawColor(Color.BLACK);
-          for(int i = 0; i < pixels; i++) {
-              canvas.drawCircle(x + radius, diameter * i + radius, radius, p);
-              //Log.d(TAG, "Drawing circle " + (i+1) + " x: " + x + " y: " + (diameter * i) + " diameter: " + diameter);
-          }
+	private void prepareForDrawing() {
+		if(pixels > 0) {
+			diameter = getHeight() / pixels;
+			x = (getWidth() - diameter) / 2;
+			radius = diameter / 2;
+			circleBitmap = Bitmap.createBitmap((int) (diameter + 0.5), (int) (diameter + 0.5), Config.ARGB_8888);
+			Canvas canvas = new Canvas(circleBitmap);
+			canvas.drawCircle(radius, radius, radius, p);
+			if(!_pixelThread.isRunning()) {
+				_pixelThread.setRunning(true);
+				_pixelThread.start();
+			}
+		}
+	}
+	
+    public void doDraw(Canvas canvas) {
+		if(canvas != null) {
+			canvas.drawColor(Color.BLACK);
+			for (int i = 0; i < pixels; i++) {
+				if(data[loc][i])
+					canvas.drawBitmap(circleBitmap, x, diameter * i, p);
+					//canvas.drawCircle(x + radius, diameter * i + radius, radius, p);
+				// Log.d(TAG, "Drawing circle " + (i+1) + " x: " + x + " y: " +
+				// (diameter * i) + " diameter: " + diameter);
+			}
+			loc++;
+			if(loc >= data.length) loc = 0;
+		}
     }
 }
