@@ -2,13 +2,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity" >
+    tools:context=".MainActivity"
+    android:layout_margin="5dp" >
 
-    <com.illinidroid.pov.wand.PixelDisplay
-        android:id="@+id/pixelDisplay1"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+    <EditText
+        android:id="@+id/displayText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" />
+        android:layout_toLeftOf="@+id/colorBorder"
+        android:ems="10"
+        android:hint="@string/hint_display" >
+
+        <requestFocus />
+    </EditText>
+
+    <RelativeLayout
+        android:id="@id/colorBorder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/displayText"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="2dp"
+        android:background="@android:color/black" >
+
+        <Button
+            android:id="@+id/colorPicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:background="@android:color/white" />
+        
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/displayButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/displayText"
+        android:layout_centerHorizontal="true"
+        android:text="Display!" />
 
 </RelativeLayout>
