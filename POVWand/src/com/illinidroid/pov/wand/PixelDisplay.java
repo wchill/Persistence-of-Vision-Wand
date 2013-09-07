@@ -11,6 +11,7 @@ import android.view.SurfaceView;
 public class PixelDisplay extends SurfaceView {
 	
 	int pixels = 0;
+	int loc = 0;
 	
 	static final String TAG = "PixelDisplay";
 	SurfaceHolder holder;
@@ -44,9 +45,11 @@ public class PixelDisplay extends SurfaceView {
 		p.setColor(color);
 	}
 	
-	public void setDisplayData(boolean[][] data) {
-		this.data = data;
-		pixels = data[0].length;
+	public void setDisplayText(String text) {
+		data = TextConverter.convert(text);
+		if(data.length > 0)
+			pixels = data[0].length;
+		prepareForDrawing();
 	}
 	
 	public void init() {
@@ -77,11 +80,7 @@ public class PixelDisplay extends SurfaceView {
 
 			@Override
 			public void surfaceCreated(SurfaceHolder holder) {
-				diameter = getHeight() / pixels;
-				x = (getWidth() - diameter) / 2;
-				radius = diameter / 2;
-				_pixelThread.setRunning(true);
-				_pixelThread.start();
+				prepareForDrawing();
 			}
 
 			@Override
@@ -92,12 +91,30 @@ public class PixelDisplay extends SurfaceView {
 		});
 	}
 	
+	private void prepareForDrawing() {
+		if(pixels > 0) {
+			diameter = getHeight() / pixels;
+			x = (getWidth() - diameter) / 2;
+			radius = diameter / 2;
+			if(!_pixelThread.isRunning()) {
+				_pixelThread.setRunning(true);
+				_pixelThread.start();
+			}
+		}
+	}
+	
 	@Override
     protected void onDraw(Canvas canvas) {
-          canvas.drawColor(Color.BLACK);
-          for(int i = 0; i < pixels; i++) {
-              canvas.drawCircle(x + radius, diameter * i + radius, radius, p);
-              //Log.d(TAG, "Drawing circle " + (i+1) + " x: " + x + " y: " + (diameter * i) + " diameter: " + diameter);
-          }
+		if(canvas != null) {
+			canvas.drawColor(Color.BLACK);
+			for (int i = 0; i < pixels; i++) {
+				if(data[loc][i])
+					canvas.drawCircle(x + radius, diameter * i + radius, radius, p);
+				// Log.d(TAG, "Drawing circle " + (i+1) + " x: " + x + " y: " +
+				// (diameter * i) + " diameter: " + diameter);
+			}
+			loc++;
+			if(loc >= data.length) loc = 0;
+		}
     }
 }
