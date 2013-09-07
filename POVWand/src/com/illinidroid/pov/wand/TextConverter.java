@@ -119,6 +119,7 @@ public class TextConverter {
 				break;
 			}
 			System.arraycopy(temp, 0, output, WIDTH * i, temp.length);
+			
 		}
 		return output;
 	}

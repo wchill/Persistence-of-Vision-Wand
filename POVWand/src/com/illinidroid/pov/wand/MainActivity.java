@@ -42,6 +42,7 @@ public class MainActivity extends Activity implements OnClickListener {
 				else {
 					Intent intent = new Intent(MainActivity.this, DisplayActivity.class);
 					intent.putExtra("text", s);
+					intent.putExtra("color", color);
 					MainActivity.this.startActivity(intent);
 				}
 			}
