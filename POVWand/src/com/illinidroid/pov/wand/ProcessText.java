@@ -1,13 +1,11 @@
 package com.illinidroid.pov.wand;
-import java.util.Arrays;
-
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
 public class ProcessText {
 	
-	public int[][] processImage(String text, float textSize) {
+	public static boolean[][] processImage(String text, float textSize) {
 		Paint paint = new Paint();
 
 	    int width = (int) (paint.measureText(text) + 0.5f); // round
@@ -17,18 +15,15 @@ public class ProcessText {
 	    Canvas canvas = new Canvas(image);
 	    canvas.drawText(text, 0, baseline, paint);
 	    Bitmap b = image;
-		int[] pixels = new int[b.getWidth()*b.getHeight()];
-		/*boolean[][] */ int[][] isColored = new /*boolean*/ int[b.getHeight()][b.getWidth()];
-		System.out.println("1");
+		//int[] pixels = new int[b.getWidth()*b.getHeight()];
+		boolean[][] isColored = new boolean[b.getWidth()][b.getHeight()];
 		for(int r= 0; r < b.getHeight(); r++)
 		{
-			System.out.println("2");
 			for(int c = 0; c < b.getWidth(); c++)
 			{
-				System.out.println("3");
 				if(b.getPixel(c,r) != 0)
 				{
-					isColored[r][c] = 1;
+					isColored[c][r] = true;
 				}
 				
 			}
@@ -63,7 +58,7 @@ public class ProcessText {
 //		}
 //		
 //	
-		System.out.println(Arrays.deepToString(isColored));
+		//System.out.println(Arrays.deepToString(isColored));
 		return isColored;
 	}
 

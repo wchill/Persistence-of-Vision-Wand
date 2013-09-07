@@ -4,5 +4,19 @@
     <string name="app_name">Light Wand</string>
     <string name="action_settings">Settings</string>
     <string name="hint_display">Text to Display</string>
+    <string-array name="faces">
+        <item>IEEE</item>
+        <item>ಠ_ಠ</item>
+        <item>(╯°□°)╯︵ ┻━┻</item>
+        <item>(´･ω･`)</item>
+        <item>┌∩┐(◣_◢)┌∩┐</item>
+        <item>(⊙ω⊙)</item>
+        <item>(• ε •)</item>
+        <item>┬─┬﻿ ノ( ゜-゜ノ)</item>
+        <item>(ノ ゜Д゜)ノ ︵ ┻━┻</item>
+        <item>(╯°□°)╯︵ ┻━┻ ︵ ╯(°□° ╯)</item>
+        <item>（ -.-）ノ-=≡≡卍</item>
+        <item>(╥﹏╥)</item>
+    </string-array>
 
 </resources>

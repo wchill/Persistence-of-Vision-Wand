@@ -55,7 +55,7 @@ public class PixelDisplay extends SurfaceView {
 	}
 	
 	public void setDisplayText(String text) {
-		data = TextConverter.convert(text);
+		data = ProcessText.processImage(text, 12);//TextConverter.convert(text);
 		if(data.length > 0)
 			pixels = data[0].length;
 		if(getHeight() > 0)

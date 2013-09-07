@@ -14,8 +14,12 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnClickListener {
@@ -24,6 +28,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	Button displayButton;
 	EditText displayText;
 	int color = Color.WHITE;
+	String[] faces;
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +50,18 @@ public class MainActivity extends Activity implements OnClickListener {
 					intent.putExtra("color", color);
 					MainActivity.this.startActivity(intent);
 				}
+			}
+		});
+        
+        faces = getResources().getStringArray(R.array.faces);
+        
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, faces);
+        ListView listView = (ListView) findViewById(R.id.rageFaces);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View viewClicked,int position, long id) {
+				displayText.setText(faces[position]);
 			}
 		});
     }

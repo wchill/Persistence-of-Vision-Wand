@@ -2,8 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:layout_margin="5dp" >
+    android:layout_margin="5dp"
+    tools:context=".MainActivity" >
 
     <EditText
         android:id="@+id/displayText"
@@ -43,5 +43,13 @@
         android:layout_below="@+id/displayText"
         android:layout_centerHorizontal="true"
         android:text="Display!" />
+
+    <ListView
+        android:id="@+id/rageFaces"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/displayButton"
+        android:layout_centerHorizontal="true" >
+    </ListView>
 
 </RelativeLayout>

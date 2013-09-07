@@ -51,12 +51,10 @@ public class PixelThread extends Thread {
 			sleepTime = ticksPS - (System.currentTimeMillis() - startTime);
 			try {
 				if (sleepTime > 0) {
-					Log.d(TAG, "Sleeping " + sleepTime);
 					sleep(sleepTime);
 				}
 				else {
-					Log.d(TAG, "Sleeping 10");
-					sleep(10);
+					//sleep(10);
 				}
 			} catch (Exception e) {
 			}
