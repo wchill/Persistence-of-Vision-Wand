@@ -4,69 +4,53 @@ import android.graphics.Canvas;
 
 public class PixelThread extends Thread 
 {
-    static final long FPS = 10;
+	static final long FPS = 60;
+	
+    // The actual view that handles inputs
+    // and draws to the surface
     private PixelDisplay view;
-    private boolean running = false;
-   
-    public PixelThread(PixelDisplay view) 
-    {
-          this.view = view;
+
+    // flag to hold game state
+    private boolean running;
+
+    public boolean isRunning() {
+        return running;
     }
- 
-    public void setRunning(boolean run) 
-    {
-          running = run;
-    }    
-    
+
+    public void setRunning(boolean running) {
+        this.running = running;
+    }
+
+    public PixelThread(PixelDisplay view) {
+        super();
+        this.view = view;
+    }
+
     @Override
-    public void run() 
-    {
-          long ticksPS = 1000 / FPS;
-          long startTime;
-          long sleepTime;
-          
-          while (running) 
-          {
+    public void run() {
+    	long ticksPS = 1000 / FPS;
+        long startTime;
+        long sleepTime;
+          while (running) {
                  Canvas c = null;
                  startTime = System.currentTimeMillis();
-                 try 
-                 {
+                 try {
                         c = view.getHolder().lockCanvas();
-                        
-                        synchronized (view.getHolder()) 
-                        {
+                        synchronized (view.getHolder()) {
                                view.onDraw(c);
                         }
-                 } 
-                 finally 
-                 {
-                        if (c != null) 
-                        {
+                 } finally {
+                        if (c != null) {
                                view.getHolder().unlockCanvasAndPost(c);
                         }
                  }
-                 
-                 
-                 sleepTime = ticksPS + startTime - System.currentTimeMillis();
-                 
-                 
-                 try 
-                 {
+                 sleepTime = ticksPS-(System.currentTimeMillis() - startTime);
+                 try {
                         if (sleepTime > 0)
-                        {
                                sleep(sleepTime);
-                        }
                         else
-                        {
                                sleep(10);
-                        }
-                        
-                        
-                        
-                 } 
-                 catch (Exception e) {
-                 
-                 }
+                 } catch (Exception e) {}
           }
     }
 }
