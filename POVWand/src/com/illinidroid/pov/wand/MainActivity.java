@@ -20,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnClickListener {
@@ -27,6 +28,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	Button pickColor;
 	Button displayButton;
 	EditText displayText;
+	SeekBar refreshRate;
 	int color = Color.WHITE;
 	String[] faces;
 	
@@ -38,6 +40,7 @@ public class MainActivity extends Activity implements OnClickListener {
         pickColor.setOnClickListener(this);
         displayButton = (Button) findViewById(R.id.displayButton);
         displayText = (EditText) findViewById(R.id.displayText);
+        refreshRate = (SeekBar) findViewById(R.id.seekBar);
         displayButton.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -48,6 +51,7 @@ public class MainActivity extends Activity implements OnClickListener {
 					Intent intent = new Intent(MainActivity.this, DisplayActivity.class);
 					intent.putExtra("text", s);
 					intent.putExtra("color", color);
+					intent.putExtra("fps", refreshRate.getProgress());
 					MainActivity.this.startActivity(intent);
 				}
 			}

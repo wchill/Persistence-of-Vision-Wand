@@ -15,5 +15,7 @@ public class DisplayActivity extends Activity {
 		PixelDisplay pd = (PixelDisplay) findViewById(R.id.pixelDisplay);
 		pd.setDisplayText(intent.getStringExtra("text"));
 		pd.setColor(intent.getIntExtra("color", Color.WHITE));
+		int fps = intent.getIntExtra("fps", 30);
+		pd.setFPS((fps > 0) ? fps : 1);
 	}
 }

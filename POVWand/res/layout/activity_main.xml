@@ -36,14 +36,6 @@
         
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/displayButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/displayText"
-        android:layout_centerHorizontal="true"
-        android:text="Display!" />
-
     <ListView
         android:id="@+id/rageFaces"
         android:layout_width="match_parent"
@@ -51,5 +43,22 @@
         android:layout_below="@+id/displayButton"
         android:layout_centerHorizontal="true" >
     </ListView>
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/displayText"
+        android:progress="30"
+        android:max="60" />
+
+    <Button
+        android:id="@+id/displayButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/seekBar"
+        android:layout_centerHorizontal="true"
+        android:text="Display!" />
 
 </RelativeLayout>

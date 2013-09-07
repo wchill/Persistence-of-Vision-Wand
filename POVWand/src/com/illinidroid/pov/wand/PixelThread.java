@@ -5,7 +5,7 @@ import android.os.Debug;
 import android.util.Log;
 
 public class PixelThread extends Thread {
-	static final long FPS = 120;
+	static int FPS = 30;
 
 	private static final String TAG = "PixelDisplay";
 
@@ -22,6 +22,10 @@ public class PixelThread extends Thread {
 
 	public void setRunning(boolean running) {
 		this.running = running;
+	}
+	
+	public void setFPS(int FPS) {
+		PixelThread.FPS = FPS;
 	}
 
 	public PixelThread(PixelDisplay view) {

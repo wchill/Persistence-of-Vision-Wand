@@ -18,6 +18,8 @@ public class PixelDisplay extends SurfaceView {
 	int pixels = 0;
 	int loc = 0;
 	
+	int FPS = 30;
+	
 	static final String TAG = "PixelDisplay";
 	SurfaceHolder holder;
 	private PixelThread _pixelThread;
@@ -52,6 +54,10 @@ public class PixelDisplay extends SurfaceView {
 	
 	public void setColor(int color) {
 		p.setColor(color);
+	}
+	
+	public void setFPS(int FPS) {
+		this.FPS = FPS;
 	}
 	
 	public void setDisplayText(String text) {
@@ -110,6 +116,7 @@ public class PixelDisplay extends SurfaceView {
 			Canvas canvas = new Canvas(circleBitmap);
 			canvas.drawCircle(radius, radius, radius, p);
 			if(!_pixelThread.isRunning()) {
+				_pixelThread.setFPS(FPS);
 				_pixelThread.setRunning(true);
 				_pixelThread.start();
 			}
